@@ -1,0 +1,8 @@
+.card__photo {
+  width: 100%;
+  grid-row: 1;
+  grid-column: 1/3;
+  border-radius: 10px 10px 0 0;
+  object-fit: cover;
+  height: 282px;
+}

@@ -1,0 +1,18 @@
+.popup__container_delete {
+  width: 430px;
+  height: 181px;
+  background: #FFFFFF;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@media screen and (max-width: 505px) {
+  .popup__container_delete {
+    width: 280px;
+    height: 150px;
+  }
+}

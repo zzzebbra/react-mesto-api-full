@@ -1,0 +1,14 @@
+.login__submit-button {
+  width: 358px;
+  height: 50px;
+  background: #FFFFFF;
+  border: none;
+  border-radius: 2px;
+  font-family: "Inter", "Arial", sans-serif;
+  margin-top: 216px;
+  outline: none;
+}
+
+.login__submit-button:hover {
+  cursor: pointer;
+}

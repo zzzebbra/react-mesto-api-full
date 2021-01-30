@@ -1,0 +1,7 @@
+.popup__submit-button_disabled {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-sizing: border-box;
+    border-radius: 2px;
+    background-color: #fff;
+    color: rgba(0, 0, 0, 0.15);
+}

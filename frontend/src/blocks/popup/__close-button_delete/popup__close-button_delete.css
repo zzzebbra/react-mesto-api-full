@@ -1,0 +1,15 @@
+.popup__close-button_delete {
+  top: -15%;
+}
+
+.popup__close-button_delete:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 505px) {
+  .popup__close-button_delete {
+    width: 35px;
+    height: 35px;
+  }
+}

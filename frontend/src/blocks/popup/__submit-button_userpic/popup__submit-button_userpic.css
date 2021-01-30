@@ -1,0 +1,9 @@
+.popup-userpic__submit-button {
+  margin: 48px 0 0 0;
+}
+
+@media screen and (max-width: 505px) {
+  .popup-userpic__submit-button {
+    margin: 35px 0 0 0;
+  }
+}

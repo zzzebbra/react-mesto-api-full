@@ -1,0 +1,12 @@
+.popup__input-error-message {
+    visibility: hidden;
+    font-family: "Inter", "Arial", sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 15px;
+    color: #FF0000;
+    margin: 0 0 13px 36px;
+    display: inline-block;
+    height: 15px;
+}

@@ -1,0 +1,8 @@
+.header {
+  margin: 0 auto;
+  max-width: 882px;
+  border-bottom: 1px solid rgb(84, 84, 84, 0.7);
+  background-color: black;
+  display: flex;
+  justify-content: space-between;
+}
