@@ -1,7 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const { errors, Joi, RegExp, celebrate } = require('celebrate');
+const { errors, Joi, celebrate } = require('celebrate');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 require('dotenv').config();
 
 const app = express();
@@ -20,6 +21,8 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 });
 
 app.use(bodyParser.json());
+
+app.use(requestLogger);
 
 app.post('/signin', celebrate ({
   body: Joi.object().keys({
@@ -41,6 +44,8 @@ app.post('/signup', celebrate ({
 app.use(auth);
 
 app.use(routes);
+
+app.use(errorLogger);
 
 app.use(errors()); // обработчик ошибок celebrate
 
