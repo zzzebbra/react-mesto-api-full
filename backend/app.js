@@ -1,14 +1,15 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const { errors, Joi, RegExp, celebrate } = require('celebrate');
 require('dotenv').config();
 
 const app = express();
-const bodyParser = require('body-parser');
+
 const routes = require('./routes/index');
 
 const { createUser, login } = require('./controllers/users');
 const auth = require('./middlewares/auth');
-//const { BadRequestError, UnauthorizedError, ForbiddenError, NotFoundError, InternalServerError } = require('./middlewares/errors);
 
 const { PORT = 3000 } = process.env;
 
@@ -17,13 +18,31 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useCreateIndex: true,
   useFindAndModify: false,
 });
+
 app.use(bodyParser.json());
-app.post('/signin', login);
-app.post('/signup', createUser);
+
+app.post('/signin', celebrate ({
+  body: Joi.object().keys({
+    email: Joi.string().email().required(),
+    password: Joi.string().min(8).required(),
+    })
+}), login);
+
+app.post('/signup', celebrate ({
+  body: Joi.object().keys({
+    email: Joi.string().email().required(),
+    password: Joi.string().min(8).required(),
+    name: Joi.string().min(2).max(30),
+    about: Joi.string().min(2).max(30),
+    avatar: Joi.string().regex(/https?:\/\/[www]?[a-z\-\.\_\~\:\/\?\#\[\]\@\!\$\&\'\(\)\*\+\,\;\=0-9]*#?/),
+    })
+}), createUser);
 
 app.use(auth);
 
 app.use(routes);
+
+app.use(errors()); // обработчик ошибок celebrate
 
 app.use((err, req, res, next) => {
   // если у ошибки нет статуса, выставляем 500
