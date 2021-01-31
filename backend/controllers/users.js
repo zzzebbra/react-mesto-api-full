@@ -35,7 +35,7 @@ module.exports.createUser = (req, res, next) => {
     email: email,
     password: hash, // записываем хеш в базу
   })
-      .then((user) =>{ res.send({ data: user }) })
+      .then((user) => { res.send({ data: user }) })
       .catch(next);
   })
   .catch(next)
@@ -52,7 +52,7 @@ module.exports.login = (req, res, next) => {
     res.send({ token });
     return token
   })
-  .catch(() => {throw new UnauthorizedError( 'Карточка не существует' )})
+  .catch(() => {throw new BadRequestError( 'Неправильный логин или пароль. Проверьте введённые данные' )})
   .catch(next);
 }
 
