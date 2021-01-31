@@ -1,4 +1,4 @@
-import {baseUrl, token} from './constants'
+import {baseUrl} from './constants'
 
 const handleOriginalResponse = (res) => {
   if (!res.ok) {

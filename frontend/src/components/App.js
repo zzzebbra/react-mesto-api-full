@@ -183,7 +183,7 @@ function handleLoggedIn() {
 
      <Route path='/sign-in'>
      <Header loggedIn={isLoggedIn}
-           link="/sign-up"
+          link="/sign-up"
           email=""
           text="Регистрация"
             />
@@ -191,7 +191,7 @@ function handleLoggedIn() {
       </Route>
       <Route path='/sign-up'>
       <Header loggedIn={isLoggedIn}
-           link="/sign-in"
+          link="/sign-in"
           email=""
           text="Войти"
             />
