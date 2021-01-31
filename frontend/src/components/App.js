@@ -181,17 +181,17 @@ function handleLoggedIn() {
             onCardDelete = {handleCardDelete}
             cards = {cards}></ProtectedRoute>
 
-     <Route path='/sign-in'>
+     <Route path='/signin'>
      <Header loggedIn={isLoggedIn}
-          link="/sign-up"
+          link="/signup"
           email=""
           text="Регистрация"
             />
       <Login submitButton='Войти' onSubmit={login} handleLogin={handleLoggedIn}/>
       </Route>
-      <Route path='/sign-up'>
+      <Route path='/signup'>
       <Header loggedIn={isLoggedIn}
-          link="/sign-in"
+          link="/signin"
           email=""
           text="Войти"
             />
