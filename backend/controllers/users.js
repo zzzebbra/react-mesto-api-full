@@ -28,7 +28,6 @@ module.exports.getUserById = (req, res, next) => {
 
 module.exports.createUser = (req, res, next) => {
   const { email, password, name, about, avatar } = req.body;
-
   bcrypt.hash(password, 10)
     .then((hash) => {
     User.create({ name, about, avatar,
@@ -59,6 +58,22 @@ module.exports.login = (req, res, next) => {
 module.exports.me = (req, res, next) => {
   const userId = req.user._id;
   User.findOne({ _id: userId })
-    .then((user) => { res.send({ data: user }); })
+    .then((user) => { return res.send({ data: user }); })
+    .catch(next);
+};
+
+module.exports.updateAvatar = (req, res, next) => {
+  const { avatar } = req.body;
+  const userId = req.user._id;
+  User.findOneAndUpdate({ _id: userId }, { avatar }, { new: true, runValidators: true })
+    .then((user) => res.send({ data: user }))
+    .catch(next);
+};
+
+module.exports.updateMe = (req, res, next) => {
+  const { name, about } = req.body;
+  const userId = req.user._id;
+  User.findOneAndUpdate({ _id: userId }, { name, about }, { new: true, runValidators: true })
+    .then((user) => res.send({ data: user }))
     .catch(next);
 };

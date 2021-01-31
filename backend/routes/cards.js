@@ -1,5 +1,5 @@
 const cardRouter = require('express').Router();
-const { createCard, deleteCard, getCards } = require('../controllers/cards');
+const { createCard, deleteCard, getCards, dislikeCard, likeCard } = require('../controllers/cards');
 const { celebrate, Joi } = require('celebrate');
 
 cardRouter.get('/cards', getCards);
@@ -18,5 +18,18 @@ cardRouter.delete('/cards/:cardId', celebrate ({
   })
 }),
 deleteCard);
+
+
+cardRouter.put('/cards/likes/:cardId', celebrate({
+  headers: Joi.object().keys({
+    authorization: Joi.string().required(),
+  }).unknown(true),
+}), likeCard);
+
+cardRouter.delete('/cards/likes/:cardId', celebrate({
+  headers: Joi.object().keys({
+    authorization: Joi.string().required(),
+  }).unknown(true),
+}), dislikeCard);
 
 module.exports = cardRouter;

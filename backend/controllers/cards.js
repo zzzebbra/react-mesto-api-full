@@ -3,12 +3,12 @@ const { BadRequestError, UnauthorizedError, ForbiddenError, NotFoundError, Inter
 
 module.exports.getCards = (req, res, next) => {
   Card.find({})
+  .populate(['owner', 'likes'])
     .then((card) => res.send({ data: card }))
     .catch(next);
 };
 
 module.exports.createCard = (req, res, next) => {
-
   const { name, link } = req.body;
   const owner = req.user._id;
   Card.create({ name, link, owner })
@@ -24,8 +24,45 @@ module.exports.deleteCard = (req, res, next) => {
         if (card.owner.toString() === req.user._id) {
           Card.findByIdAndRemove(req.params.cardId)
           .then((card) => {  return res.send({ data: card }) })
-          throw new InternalServerError( 'На сервере произошла ошибка' )
       }
   })
   .catch(next)
+};
+
+module.exports.likeCard = (req, res, next) => {
+  Card.findByIdAndUpdate(
+    req.params.cardId,
+    { $addToSet: { likes: req.user._id } },
+    { new: true },
+  ).populate(['likes'])
+    .then((user) => {
+      if (!user) {
+        throw new NotFoundError('Нет карточки');
+      } return res.send({ data: user });
+    })
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        throw new BadRequestError('Возможно не корректный ИД');
+      } next(err);
+    })
+    .catch(next);
+};
+
+module.exports.dislikeCard = (req, res, next) => {
+  Card.findByIdAndUpdate(
+    req.params.cardId,
+    { $pull: { likes: req.user._id } },
+    { new: true },
+  ).populate(['likes'])
+    .then((user) => {
+      if (!user) {
+        throw new NotFoundError('Нет карточки');
+      } return res.send({ data: user });
+    })
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        throw new BadRequestError('Возможно не корректный ИД');
+      } next(err);
+    })
+    .catch(next);
 };

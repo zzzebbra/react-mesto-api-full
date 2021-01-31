@@ -30,14 +30,26 @@ const [operationStatus, setOperationStatus] = React.useState(false);
 const history = useHistory();
 
 React.useEffect(()=> {
-  api.getCards()
-  .then((res) => {
-    setCards(res);
-  })
 if(localStorage.getItem('token')){
   api.getUserData(localStorage.getItem('token')).then((res)=> onAuth(res))
+  api.getUserData(localStorage.getItem('token'))
+  .then((res) => {
+    setCurrentUser(res.data)
+  })
+  .then(()=> api.getCards(localStorage.getItem('token'))
+  .then((res) => {
+    setCards(res.data);
+    console.log(res.data)
+  })  )
+
+
 }
-}, [])
+// api.getCards(localStorage.getItem('token'))
+// .then((res) => {
+//   setCards(res.data);
+//   console.log(res.data)
+// })
+}, [isLoggedIn])
 
 function openInfoTooltip() {
   setIsInfoTooltipPopupOpen(true)
@@ -50,11 +62,12 @@ function register({password, email}) {
 }
 
 function login({password, email}) {
-  api.login(password, email)
+  api.login( password, email)
   .then((res)=> {
     localStorage.setItem('token', res.token);
+    console.log(res.token)
     api.getUserData(res.token)
-    .then ((res)=> { onAuth(res)} ) })
+    .then ((res)=> { console.log(res);onAuth(res)} ) })
     .catch((err)=> {setOperationStatus(false); openInfoTooltip();} )
 }
 
@@ -75,19 +88,19 @@ function handleCardLike(card) {
 const isLiked = card.likes.some(i => i._id === currentUser._id);
 
 // Отправляем запрос в API и получаем обновлённые данные карточки
-api.changeLikeCardStatus(card._id, isLiked)
+api.changeLikeCardStatus(localStorage.getItem('token'), card._id, isLiked)
   .then((newCard) => {
       // Формируем новый массив на основе имеющегося, подставляя в него новую карточку
-    const newCards = cards.map((c) => c._id === card._id ? newCard : c);
+    const newCards = cards.map((c) => c._id === card._id ? newCard.data : c);
     // Обновляем стейт
     setCards(newCards);
   });
 }
 
 function handleCardDelete(card) {
-  api.deleteMyCard(card._id)
+  api.deleteMyCard(localStorage.getItem('token'), card._id)
     .then((newCard) => {
-      const newCards = cards.filter((c) => card._id !== newCard._id);
+      const newCards = cards.filter((c) => c._id !== newCard.data._id);
       setCards(newCards)
     })
 }
@@ -117,25 +130,25 @@ function handleEditAvatarClick() {
 }
 
 function handleUpdateUser(props) {
-  api.setUserInfo(props.name, props.description)
+  api.setUserInfo(localStorage.getItem('token'), props.name, props.description)
     .then((res) => {
-      setCurrentUser(res)
+      setCurrentUser(res.data)
       closeAllPopups()
     });
 }
 
 function handleUpdateAvatar(props) {
-  api.updateAvatar(props.avatar)
+  api.updateAvatar(localStorage.getItem('token'), props.avatar)
     .then((res) => {
-      setCurrentUser(res)
+      setCurrentUser(res.data)
       closeAllPopups()
     });
 }
 
 function handleAddPlaceSubmit(props) {
-  api.addNewCard(props.name, props.link)
+  api.addNewCard(localStorage.getItem('token'), props.name, props.link)
     .then((newCard) => {
-      setCards([newCard, ...cards]);
+      setCards([newCard.data, ...cards]);
       closeAllPopups()
     });
 }
@@ -143,14 +156,6 @@ function handleAddPlaceSubmit(props) {
 function handleLoggedIn() {
   setIsLoggedIn(true);
 }
-
-React.useEffect(() => {
-  api.getUserInfo()
-    .then((res) => {
-      setCurrentUser(res)
-    });
-}, [])
-
 
   return (
     <div className="page">

@@ -1,4 +1,4 @@
-import {baseUrl, baseAuthUrl, token} from './constants'
+import {baseUrl, token} from './constants'
 
 const handleOriginalResponse = (res) => {
   if (!res.ok) {
@@ -8,14 +8,12 @@ const handleOriginalResponse = (res) => {
 }
 
 class Api {
-  constructor(baseUrl, baseAuthUrl, token) {
+  constructor(baseUrl) {
     this.baseUrl = baseUrl;
-    this.token = token;
-    this.baseAuthUrl = baseAuthUrl;
   }
 
   signup(password, email) {
-    return fetch(`${this.baseAuthUrl}/signup`, {
+    return fetch(`${this.baseUrl}/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -29,7 +27,7 @@ class Api {
   }
 
   login(password, email) {
-    return fetch(`${this.baseAuthUrl}/signin`, {
+    return fetch(`${this.baseUrl}/signin`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -43,7 +41,7 @@ class Api {
   }
 
   getUserData(jwt) {
-    return fetch(`${this.baseAuthUrl}/users/me`, {
+    return fetch(`${this.baseUrl}/users/me`, {
       method: 'GET',
       headers: {
         authorization: `Bearer ${jwt}`,
@@ -53,33 +51,33 @@ class Api {
     .then(handleOriginalResponse)
   }
 
-  getCards() {
-    return fetch(`${this.baseUrl}cards`, {
+  getCards(jwt) {
+    return fetch(`${this.baseUrl}/cards`, {
       method: 'GET',
       headers: {
-        authorization: this.token,
+        authorization: `Bearer ${jwt}`,
         'Content-Type': 'application/json',
       }
     })
     .then(handleOriginalResponse)
   }
 
-  getUserInfo() {
-    return fetch(`${this.baseUrl}users/me`, {
+  getUserInfo(jwt) {
+    return fetch(`${this.baseUrl}/users/me`, {
       method: 'GET',
       headers: {
-        authorization: this.token,
+        authorization: `Bearer ${jwt}`,
         'Content-Type': 'application/json',
       }
     })
     .then(handleOriginalResponse)
   }
 
-  setUserInfo(name, about) {
-    return fetch(`${this.baseUrl}users/me`, {
+  setUserInfo(jwt, name, about) {
+    return fetch(`${this.baseUrl}/users/me`, {
       method: 'PATCH',
       headers: {
-        authorization: this.token,
+        authorization: `Bearer ${jwt}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -90,11 +88,11 @@ class Api {
     .then(handleOriginalResponse)
   }
 
-  addNewCard(name, link) {
-    return fetch(`${this.baseUrl}cards`, {
+  addNewCard(jwt, name, link) {
+    return fetch(`${this.baseUrl}/cards`, {
       method: 'POST',
       headers: {
-        authorization: this.token,
+        authorization: `Bearer ${jwt}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -105,35 +103,35 @@ class Api {
     .then(handleOriginalResponse)
   }
 
-  deleteMyCard(cardId) {
-    return fetch(`${this.baseUrl}cards/${cardId}`, {
+  deleteMyCard(jwt, cardId) {
+    return fetch(`${this.baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
       headers: {
-        authorization: this.token,
+        authorization: `Bearer ${jwt}`,
         'Content-Type': 'application/json',
       }
     })
     .then(handleOriginalResponse)
   }
 
-  changeLikeCardStatus(cardId, isLiked) {
+  changeLikeCardStatus(jwt, cardId, isLiked) {
     let methodValue;
     isLiked ? (methodValue = "DELETE") : (methodValue = "PUT");
-    return fetch(`${this.baseUrl}cards/likes/${cardId}`, {
+    return fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
       method: methodValue,
       headers: {
-        authorization: this.token,
+        authorization: `Bearer ${jwt}`,
         'Content-Type': 'application/json',
       }
     })
     .then(handleOriginalResponse)
   }
 
-  updateAvatar(link) {
-    return fetch(`${this.baseUrl}users/me/avatar`, {
+  updateAvatar(jwt, link) {
+    return fetch(`${this.baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: {
-        authorization: this.token,
+        authorization: `Bearer ${jwt}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -145,6 +143,6 @@ class Api {
 
 }
 
-const api = new Api(baseUrl, baseAuthUrl, token);
+const api = new Api(baseUrl);
 
 export default api;
