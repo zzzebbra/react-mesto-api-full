@@ -1,5 +1,6 @@
-const baseUrl = "https://mesto.nomoreparties.co/v1/cohort-16/";
-const baseAuthUrl = "https://auth.nomoreparties.co";
-const token = 'ecd5d904-ba49-4381-9016-a76df3cbb46c';
+const baseUrl = "http://api.zzzebbra.students.nomoreparties.space";
+const baseAuthUrl = "http://api.zzzebbra.students.nomoreparties.space";
+const { NODE_ENV, JWT_SECRET } = process.env;
+const token = JWT_SECRET;
 
 export {baseUrl, baseAuthUrl, token}

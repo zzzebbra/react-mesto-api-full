@@ -45,7 +45,7 @@ function openInfoTooltip() {
 
 function register({password, email}) {
   api.signup(password, email)
-  .then ((res)=> { if (res.data) { setOperationStatus(true); openInfoTooltip()} else { setOperationStatus(false); openInfoTooltip() }    } )
+  .then ((res)=> { if (res.data) { setOperationStatus(true); openInfoTooltip()} else { setOperationStatus(false); openInfoTooltip() } } )
   .catch((err)=> {setOperationStatus(false); openInfoTooltip();} )
 }
 
