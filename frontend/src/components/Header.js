@@ -18,7 +18,7 @@ function Header(props) {
   return (
     <div className="header">
       <img className="logo" src={logo} alt="Логотип"/>
-      <a href={props.link} className="header__register"><p className="header__text">{props.text}</p></a>
+      <Link to={props.link} className="header__register"><p className="header__text">{props.text}</p></Link>
     </div>
   )
 }
