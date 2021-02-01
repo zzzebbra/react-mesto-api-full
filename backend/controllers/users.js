@@ -27,10 +27,14 @@ module.exports.getUserById = (req, res, next) => {
 };
 
 module.exports.createUser = (req, res, next) => {
-  if(User.findOne({email: req.email})) {
-    throw new ConflictError( 'Пользователь с таким email уже зарегистрирован' )
-  }
   const { email, password, name, about, avatar } = req.body;
+  User.findOne({email: email})
+    .then((user) => {
+      if(user !== null) {
+        throw new ConflictError( 'Пользователь с таким email уже зарегистрирован' )
+      }
+    })
+    .catch(next)
   bcrypt.hash(password, 10)
     .then((hash) => {
     User.create({ name, about, avatar,

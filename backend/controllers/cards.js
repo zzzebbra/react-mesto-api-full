@@ -1,5 +1,5 @@
 const Card = require('../models/card');
-const { BadRequestError, UnauthorizedError, ForbiddenError, NotFoundError, InternalServerError } = require('../middlewares/errors');
+const { BadRequestError, UnauthorizedError, ForbiddenError, NotFoundError, ConflictError, InternalServerError } = require('../middlewares/errors');
 
 module.exports.getCards = (req, res, next) => {
   Card.find({})
