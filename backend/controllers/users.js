@@ -2,7 +2,7 @@ const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { NODE_ENV, JWT_SECRET } = process.env;
-const { BadRequestError, UnauthorizedError, ForbiddenError, NotFoundError, InternalServerError } = require('../middlewares/errors');
+const { BadRequestError, UnauthorizedError, ForbiddenError, NotFoundError, ConflictError, InternalServerError } = require('../middlewares/errors');
 
 // const regEx = /[0-9a-z]{24}/gi;
 
@@ -27,6 +27,9 @@ module.exports.getUserById = (req, res, next) => {
 };
 
 module.exports.createUser = (req, res, next) => {
+  if(User.findOne({email: req.email})) {
+    throw new ConflictError( 'Пользователь с таким email уже зарегистрирован' )
+  }
   const { email, password, name, about, avatar } = req.body;
   bcrypt.hash(password, 10)
     .then((hash) => {
@@ -34,7 +37,7 @@ module.exports.createUser = (req, res, next) => {
     email: email,
     password: hash, // записываем хеш в базу
   })
-      .then((user) => { res.send({ data: user }) })
+      .then((user) => { res.send({data: { id: user._id, email: user.email}}) })
       .catch(next);
   })
   .catch(next)
@@ -51,7 +54,7 @@ module.exports.login = (req, res, next) => {
     res.send({ token });
     return token
   })
-  .catch(() => {throw new BadRequestError( 'Неправильный логин или пароль. Проверьте введённые данные' )})
+  .catch(() => {throw new UnauthorizedError( 'Неправильный логин или пароль. Проверьте введённые данные' )})
   .catch(next);
 }
 

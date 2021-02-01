@@ -117,11 +117,14 @@ class Api {
   changeLikeCardStatus(jwt, cardId, isLiked) {
     let methodValue;
     isLiked ? (methodValue = "DELETE") : (methodValue = "PUT");
-    return fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
+    return fetch(`${this.baseUrl}/cards/${cardId}/likes`, {
       method: methodValue,
       headers: {
         authorization: `Bearer ${jwt}`,
         'Content-Type': 'application/json',
+      },
+      params: {
+        cardId: this.cardId,
       }
     })
     .then(handleOriginalResponse)

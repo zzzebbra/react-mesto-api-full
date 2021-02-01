@@ -1,7 +1,11 @@
 const router = require('express').Router();
+const { BadRequestError, UnauthorizedError, ForbiddenError, NotFoundError, InternalServerError } = require('../middlewares/errors');
 
-router.all('/', (req, res) => {
-  res.status(404).send({ message: 'Запрашиваемый ресурс не найден' });
+router.all('/', (req, res, next) => {
+  if(res.status(404)) {
+    throw new NotFoundError('Запрашиваемый ресурс не найден' )
+    .catch(next)
+  };
 });
 
 module.exports = router;

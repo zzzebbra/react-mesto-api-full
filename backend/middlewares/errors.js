@@ -26,6 +26,13 @@ class NotFoundError extends Error {
   }
 }
 
+class ConflictError extends Error {
+  constructor(message) {
+    super(message);
+    this.statusCode = 409;
+  }
+}
+
 class InternalServerError  extends Error {
   constructor(message) {
     super(message);
@@ -33,4 +40,4 @@ class InternalServerError  extends Error {
   }
 }
 
-module.exports = {BadRequestError, UnauthorizedError, ForbiddenError, NotFoundError, InternalServerError};
+module.exports = {BadRequestError, UnauthorizedError, ForbiddenError, NotFoundError, InternalServerError, ConflictError};

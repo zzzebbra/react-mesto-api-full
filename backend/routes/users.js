@@ -11,21 +11,15 @@ userRouter.patch('/users/me', celebrate({
 
 userRouter.patch('/users/me/avatar', celebrate({
   body: Joi.object().keys({
-    // eslint-disable-next-line no-useless-escape
-    avatar: Joi.string().required(),
+    avatar: Joi.string().regex(/https?:\/\/[www]?[a-z\-\.\_\~\:\/\?\#\[\]\@\!\$\&\'\(\)\*\+\,\;\=0-9]*#?/).required(),
   }),
 }), updateAvatar);
 
-userRouter.get('/users/me', celebrate({
-  body: Joi.object().keys({
-    id: Joi.string().length(24)
-  })
-}),
- me);
+userRouter.get('/users/me', me);
 
 userRouter.get('/users/:id', celebrate({
   body: Joi.object().keys({
-    id: Joi.string().length(24)
+    id: Joi.string().length(24).required().hex()
   })
 }),
 getUserById);

@@ -14,21 +14,28 @@ createCard);
 
 cardRouter.delete('/cards/:cardId', celebrate ({
   body: Joi.object().keys({
-    cardId: Joi.string().length(24)
+    cardId: Joi.string().length(24).required().hex()
   })
 }),
 deleteCard);
 
-
-cardRouter.put('/cards/likes/:cardId', celebrate({
+cardRouter.put('/cards/:cardId/likes', celebrate({
+  params: Joi.object().keys({
+    cardId: Joi.string().length(24).required().hex()
+  }),
   headers: Joi.object().keys({
     authorization: Joi.string().required(),
+    //carId: Joi.string().length(24).required().hex()
   }).unknown(true),
 }), likeCard);
 
-cardRouter.delete('/cards/likes/:cardId', celebrate({
+cardRouter.delete('/cards/:cardId/likes', celebrate({
+  params: Joi.object().keys({
+    cardId: Joi.string().length(24).required().hex()
+  }),
   headers: Joi.object().keys({
     authorization: Joi.string().required(),
+    //cardId: Joi.string().length(24).required().hex()
   }).unknown(true),
 }), dislikeCard);
 

@@ -39,16 +39,14 @@ if(localStorage.getItem('token')){
   .then(()=> api.getCards(localStorage.getItem('token'))
   .then((res) => {
     setCards(res.data);
-    console.log(res.data)
   })  )
 
 
 }
-// api.getCards(localStorage.getItem('token'))
-// .then((res) => {
-//   setCards(res.data);
-//   console.log(res.data)
-// })
+api.getCards(localStorage.getItem('token'))
+.then((res) => {
+  setCards(res.data);
+})
 }, [isLoggedIn])
 
 function openInfoTooltip() {
@@ -65,9 +63,8 @@ function login({password, email}) {
   api.login( password, email)
   .then((res)=> {
     localStorage.setItem('token', res.token);
-    console.log(res.token)
     api.getUserData(res.token)
-    .then ((res)=> { console.log(res);onAuth(res)} ) })
+    .then ((res)=> { onAuth(res)} ) })
     .catch((err)=> {setOperationStatus(false); openInfoTooltip();} )
 }
 
@@ -89,6 +86,7 @@ const isLiked = card.likes.some(i => i._id === currentUser._id);
 
 // Отправляем запрос в API и получаем обновлённые данные карточки
 api.changeLikeCardStatus(localStorage.getItem('token'), card._id, isLiked)
+
   .then((newCard) => {
       // Формируем новый массив на основе имеющегося, подставляя в него новую карточку
     const newCards = cards.map((c) => c._id === card._id ? newCard.data : c);
@@ -180,7 +178,6 @@ function handleLoggedIn() {
             onCardLike = {handleCardLike}
             onCardDelete = {handleCardDelete}
             cards = {cards}></ProtectedRoute>
-
      <Route path='/sign-in'>
      <Header loggedIn={isLoggedIn}
           link="/sign-up"
