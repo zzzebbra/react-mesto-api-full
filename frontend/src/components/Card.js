@@ -1,3 +1,10 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
+/* eslint-disable react/button-has-type */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import CurrentUserContext from '../contexts/CurrentUserContext';
 
@@ -9,13 +16,13 @@ function Card(props) {
   );
 
   // Определяем, есть ли у карточки лайк, поставленный текущим пользователем
-  const isLiked = props.card.likes.some(i => i._id === currentUser._id);
+  const isLiked = props.card.likes.some((i) => i._id === currentUser._id);
 
-// Создаём переменную, которую после зададим в `className` для кнопки лайка
+  // Создаём переменную, которую после зададим в `className` для кнопки лайка
   const cardLikeButtonClassName = `${isLiked ? 'card__like card__like_active' : 'card__like'}`;
 
   function handleCardDelete() {
-    props.onCardDelete(props.card)
+    props.onCardDelete(props.card);
   }
 
   function handleLikeClick() {
@@ -28,12 +35,12 @@ function Card(props) {
 
   return (
     <div className="card">
-      <img onClick={handleClick} src={props.link} className="card__photo" alt={props.name}/>
-      <button onClick={handleCardDelete} className={cardDeleteButtonClassName}></button>
+      <img onClick={handleClick} src={props.link} className="card__photo" alt={props.name} />
+      <button onClick={handleCardDelete} className={cardDeleteButtonClassName} />
       <h2 className="card__text">{props.name}</h2>
-      <button type="button" className={cardLikeButtonClassName} onClick={handleLikeClick}></button>
+      <button type="button" className={cardLikeButtonClassName} onClick={handleLikeClick} />
       <p className="card__like-counter">{props.likes}</p>
     </div>
-  )
+  );
 }
 export default Card;

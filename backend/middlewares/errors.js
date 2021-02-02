@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable max-classes-per-file */
 class BadRequestError extends Error {
   constructor(message) {
     super(message);
@@ -33,11 +35,13 @@ class ConflictError extends Error {
   }
 }
 
-class InternalServerError  extends Error {
+class InternalServerError extends Error {
   constructor(message) {
     super(message);
     this.statusCode = 500;
   }
 }
 
-module.exports = {BadRequestError, UnauthorizedError, ForbiddenError, NotFoundError, InternalServerError, ConflictError};
+module.exports = {
+  BadRequestError, UnauthorizedError, ForbiddenError, NotFoundError, InternalServerError, ConflictError,
+};

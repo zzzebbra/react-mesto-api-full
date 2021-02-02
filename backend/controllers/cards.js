@@ -1,9 +1,10 @@
+/* eslint-disable max-len */
 const Card = require('../models/card');
-const { BadRequestError, UnauthorizedError, ForbiddenError, NotFoundError, ConflictError, InternalServerError } = require('../middlewares/errors');
+const { BadRequestError, NotFoundError } = require('../middlewares/errors');
 
 module.exports.getCards = (req, res, next) => {
   Card.find({})
-  .populate(['owner', 'likes'])
+    .populate(['owner', 'likes'])
     .then((card) => res.send({ data: card }))
     .catch(next);
 };
@@ -13,20 +14,19 @@ module.exports.createCard = (req, res, next) => {
   const owner = req.user._id;
   Card.create({ name, link, owner })
     .then((card) => res.send({ data: card }))
-    .catch(next)
+    .catch(next);
 };
 
 module.exports.deleteCard = (req, res, next) => {
   Card.findById(req.params.cardId.toString())
     .then((card) => {
-      if (card == null)
-      throw new NotFoundError( 'Карточка не существует' )
-        if (card.owner.toString() === req.user._id) {
-          Card.findByIdAndRemove(req.params.cardId)
-          .then((card) => {  return res.send({ data: card }) })
+      if (card == null) throw new NotFoundError('Карточка не существует');
+      if (card.owner.toString() === req.user._id) {
+        Card.findByIdAndRemove(req.params.cardId)
+          .then(() => res.send({ data: card }));
       }
-  })
-  .catch(next)
+    })
+    .catch(next);
 };
 
 module.exports.likeCard = (req, res, next) => {

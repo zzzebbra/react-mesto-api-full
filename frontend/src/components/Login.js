@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 function Login(props) {
   const emailRef = React.useRef();
@@ -12,9 +12,9 @@ function Login(props) {
     });
   }
 
-  return(
+  return (
     <div className="login">
-        <form className="login__form" action="#" name="login_form" onSubmit={handleSubmit} noValidate>
+      <form className="login__form" action="#" name="login_form" onSubmit={handleSubmit} noValidate>
         <h2 className="login__header">Вход</h2>
         <input
           ref={emailRef}
@@ -27,7 +27,7 @@ function Login(props) {
           // maxLength="40"
           required
         />
-        <p className="popup__input-error-message" id="name-error"></p>
+        <p className="popup__input-error-message" id="name-error" />
         <input
           ref={passwordRef}
           type="password"
@@ -39,11 +39,11 @@ function Login(props) {
           // maxLength="200"
           required
         />
-        <p className="popup__input-error-message" id="description-error"></p>
-          <button type="submit" className="login__submit-button">{props.submitButton}</button>
-        </form>
+        <p className="popup__input-error-message" id="description-error" />
+        <button type="submit" className="login__submit-button">{props.submitButton}</button>
+      </form>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;

@@ -1,15 +1,17 @@
-const User = require('../models/user');
+/* eslint-disable max-len */
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const User = require('../models/user');
+
 const { NODE_ENV, JWT_SECRET } = process.env;
-const { BadRequestError, UnauthorizedError, ForbiddenError, NotFoundError, ConflictError, InternalServerError } = require('../middlewares/errors');
+const { UnauthorizedError, NotFoundError, ConflictError } = require('../middlewares/errors');
 
 // const regEx = /[0-9a-z]{24}/gi;
 
 module.exports.getUsers = (req, res, next) => {
   User.find({})
     .then((user) => res.send({ data: user }))
-    .catch(next)
+    .catch(next);
 };
 
 module.exports.getUserById = (req, res, next) => {
@@ -18,7 +20,7 @@ module.exports.getUserById = (req, res, next) => {
     // if (!req.params.id.match(regEx)) res.status(400).send({ message: 'Incorrect id' }); })
     .then((user) => {
       if (user === null) {
-        throw new NotFoundError( 'Пользователя с таким ID не существует' )
+        throw new NotFoundError('Пользователя с таким ID не существует');
       } else {
         res.send({ data: user });
       }
@@ -27,45 +29,50 @@ module.exports.getUserById = (req, res, next) => {
 };
 
 module.exports.createUser = (req, res, next) => {
-  const { email, password, name, about, avatar } = req.body;
-  User.findOne({email: email})
+  const {
+    email, password, name, about, avatar,
+  } = req.body;
+  User.findOne({ email })
     .then((user) => {
-      if(user !== null) {
-        throw new ConflictError( 'Пользователь с таким email уже зарегистрирован' )
+      if (user !== null) {
+        throw new ConflictError('Пользователь с таким email уже зарегистрирован');
       }
     })
-    .catch(next)
+    .catch(next);
   bcrypt.hash(password, 10)
     .then((hash) => {
-    User.create({ name, about, avatar,
-    email: email,
-    password: hash, // записываем хеш в базу
-  })
-      .then((user) => { res.send({data: { id: user._id, email: user.email}}) })
-      .catch(next);
-  })
-  .catch(next)
+      User.create({
+        name,
+        about,
+        avatar,
+        email,
+        password: hash, // записываем хеш в базу
+      })
+        .then((user) => { res.send({ data: { id: user._id, email: user.email } }); })
+        .catch(next);
+    })
+    .catch(next);
 };
 
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
   return User.findUserByCredentials(email, password)
-  .then((user) => {
+    .then((user) => {
     // создадим токен
-    const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', {expiresIn: '7d'});
+      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '7d' });
 
-    // вернём токен
-    res.send({ token });
-    return token
-  })
-  .catch(() => {throw new UnauthorizedError( 'Неправильный логин или пароль. Проверьте введённые данные' )})
-  .catch(next);
-}
+      // вернём токен
+      res.send({ token });
+      return token;
+    })
+    .catch(() => { throw new UnauthorizedError('Неправильный логин или пароль. Проверьте введённые данные'); })
+    .catch(next);
+};
 
 module.exports.me = (req, res, next) => {
   const userId = req.user._id;
   User.findOne({ _id: userId })
-    .then((user) => { return res.send({ data: user }); })
+    .then((user) => res.send({ data: user }))
     .catch(next);
 };
 

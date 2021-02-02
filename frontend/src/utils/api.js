@@ -1,11 +1,14 @@
-import {baseUrl} from './constants'
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-shadow */
+/* eslint-disable prefer-promise-reject-errors */
+import { baseUrl } from './constants';
 
 const handleOriginalResponse = (res) => {
   if (!res.ok) {
     return Promise.reject(`Ошибка: ${res.status}`);
   }
   return res.json();
-}
+};
 
 class Api {
   constructor(baseUrl) {
@@ -19,11 +22,11 @@ class Api {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        password: password,
-        email: email
-      })
+        password,
+        email,
+      }),
     })
-    .then(handleOriginalResponse)
+      .then(handleOriginalResponse);
   }
 
   login(password, email) {
@@ -33,11 +36,11 @@ class Api {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        password: password,
-        email: email
-      })
+        password,
+        email,
+      }),
     })
-    .then(handleOriginalResponse)
+      .then(handleOriginalResponse);
   }
 
   getUserData(jwt) {
@@ -46,9 +49,9 @@ class Api {
       headers: {
         authorization: `Bearer ${jwt}`,
         'Content-Type': 'application/json',
-      }
+      },
     })
-    .then(handleOriginalResponse)
+      .then(handleOriginalResponse);
   }
 
   getCards(jwt) {
@@ -57,9 +60,9 @@ class Api {
       headers: {
         authorization: `Bearer ${jwt}`,
         'Content-Type': 'application/json',
-      }
+      },
     })
-    .then(handleOriginalResponse)
+      .then(handleOriginalResponse);
   }
 
   getUserInfo(jwt) {
@@ -68,9 +71,9 @@ class Api {
       headers: {
         authorization: `Bearer ${jwt}`,
         'Content-Type': 'application/json',
-      }
+      },
     })
-    .then(handleOriginalResponse)
+      .then(handleOriginalResponse);
   }
 
   setUserInfo(jwt, name, about) {
@@ -81,11 +84,11 @@ class Api {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        name: name,
-        about: about
-      })
+        name,
+        about,
+      }),
     })
-    .then(handleOriginalResponse)
+      .then(handleOriginalResponse);
   }
 
   addNewCard(jwt, name, link) {
@@ -96,11 +99,11 @@ class Api {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        name: name,
-        link: link
-      })
+        name,
+        link,
+      }),
     })
-    .then(handleOriginalResponse)
+      .then(handleOriginalResponse);
   }
 
   deleteMyCard(jwt, cardId) {
@@ -109,14 +112,14 @@ class Api {
       headers: {
         authorization: `Bearer ${jwt}`,
         'Content-Type': 'application/json',
-      }
+      },
     })
-    .then(handleOriginalResponse)
+      .then(handleOriginalResponse);
   }
 
   changeLikeCardStatus(jwt, cardId, isLiked) {
     let methodValue;
-    isLiked ? (methodValue = "DELETE") : (methodValue = "PUT");
+    isLiked ? (methodValue = 'DELETE') : (methodValue = 'PUT');
     return fetch(`${this.baseUrl}/cards/${cardId}/likes`, {
       method: methodValue,
       headers: {
@@ -125,9 +128,9 @@ class Api {
       },
       params: {
         cardId: this.cardId,
-      }
+      },
     })
-    .then(handleOriginalResponse)
+      .then(handleOriginalResponse);
   }
 
   updateAvatar(jwt, link) {
@@ -138,12 +141,11 @@ class Api {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        avatar: link
-      })
+        avatar: link,
+      }),
     })
-    .then(handleOriginalResponse)
+      .then(handleOriginalResponse);
   }
-
 }
 
 const api = new Api(baseUrl);
