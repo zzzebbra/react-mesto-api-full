@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import logo from '../images/logo_mesto.svg';
 
 function Header(props) {
-  // eslint-disable-next-line no-cond-assign
   if (props.loggedIn) {
     return (
       <div className="header">

@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-filename-extension */
-/* eslint-disable max-len */
 import React from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import '../index.css';
