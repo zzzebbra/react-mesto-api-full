@@ -25,7 +25,8 @@ const auth = require('./middlewares/auth');
 const corsOptions = {
   origin: [
     'http://localhost:3000', 'http://localhost:3001',
-    'https://zzzebbra.students.nomoreparties.space', 'https://www.zzzebbra.students.nomoreparties.space',
+    'https://zzzebbra.students.nomoreparties.space', 'https://www.zzzebbra.students.nomoreparties.space', 'http://www.zzzebbra.students.nomoreparties.space',
+    'http://zzzebbra.students.nomoreparties.space',
   ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   preflightContinue: false,
