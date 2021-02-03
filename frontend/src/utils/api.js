@@ -36,6 +36,7 @@ class Api {
         password,
         email,
       }),
+      credentials: 'include',
     })
       .then(handleOriginalResponse);
   }

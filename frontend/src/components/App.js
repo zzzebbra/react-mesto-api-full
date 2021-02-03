@@ -69,7 +69,7 @@ function App() {
     api.login(password, email)
       .then((res) => {
         localStorage.setItem('token', res.token);
-        console.log(res.token, 'login, localStorage.setItem(token')
+        console.log(res.token, 'login, localStorage.setItem(token)');
         api.getUserData(res.token)
           .then((res) => { console.log(res, 'login, after api.getUserData'); onAuth(res); });
       })
