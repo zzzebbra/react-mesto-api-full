@@ -59,20 +59,23 @@ function App() {
       .catch((err) => { setOperationStatus(false); openInfoTooltip(); });
   }
 
+  function onAuth(res) {
+    console.log(res, "res in onAuth");
+    setIsLoggedIn(true);
+    setLoggedUser({ email: res.data.email, _id: res.data._id });
+    console.log({ email: res.data.email, _id: res.data._id }, "res.data.email, res.data._id onAuth");
+    history.push('/');
+  }
+
   function login({ password, email }) {
     api.login(password, email)
       .then((res) => {
         localStorage.setItem('token', res.token);
+        console.log(res.token, 'login, localStorage.setItem(token')
         api.getUserData(res.token)
-          .then((res) => { onAuth(res); });
+          .then((res) => { console.log(res, 'login, after api.getUserData'); onAuth(res); });
       })
       .catch((err) => { setOperationStatus(false); openInfoTooltip(); });
-  }
-
-  function onAuth(res) {
-    setIsLoggedIn(true);
-    setLoggedUser({ email: res.data.email, _id: res.data._id });
-    history.push('/');
   }
 
   function onLogout() {
