@@ -42,6 +42,7 @@ class Api {
   }
 
   getUserData(jwt) {
+    console.log(jwt)
     return fetch(`${this.baseUrl}/users/me`, {
       method: 'GET',
       headers: {
@@ -50,7 +51,7 @@ class Api {
       },
       credentials: 'include',
     })
-      .then(handleOriginalResponse);
+      .then((res) => {console.log(jwt, 'jwt api.getUserData'), console.log(res, 'res api.getUserData'); handleOriginalResponse});
   }
 
   getCards(jwt) {

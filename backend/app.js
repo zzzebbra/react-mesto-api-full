@@ -44,15 +44,12 @@ app.use(cors(corsOptions));
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:3000', 'http://localhost:3001',
-  'https://zzzebbra.students.nomoreparties.space', 'https://www.zzzebbra.students.nomoreparties.space', 'http://www.zzzebbra.students.nomoreparties.space',
-  'http://zzzebbra.students.nomoreparties.space');
+    'https://zzzebbra.students.nomoreparties.space', 'https://www.zzzebbra.students.nomoreparties.space', 'http://www.zzzebbra.students.nomoreparties.space',
+    'http://zzzebbra.students.nomoreparties.space');
   res.header('Access-Control-Allow-Headers', 'http://localhost:3000', 'http://localhost:3001',
-  'https://zzzebbra.students.nomoreparties.space', 'https://www.zzzebbra.students.nomoreparties.space', 'http://www.zzzebbra.students.nomoreparties.space',
-  'http://zzzebbra.students.nomoreparties.space');
+    'https://zzzebbra.students.nomoreparties.space', 'https://www.zzzebbra.students.nomoreparties.space', 'http://www.zzzebbra.students.nomoreparties.space',
+    'http://zzzebbra.students.nomoreparties.space');
   res.header('Access-Control-Allow-Vethods', 'GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS');
-  // if (req.method === 'OPTIONS') {
-  //   res.send(200);
-  // }
   next();
 });
 
