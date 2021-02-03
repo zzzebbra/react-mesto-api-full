@@ -11,17 +11,6 @@ const routes = require('./routes/index');
 const { createUser, login } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 
-// const whitelist = ['https://zzzebbra.students.nomoreparties.space', 'http://www.zzzebbra.students.nomoreparties.space', 'http://localhost:3001'];
-// const corsOptions = {
-//   origin(origin, callback) {
-//     if (whitelist.indexOf(origin) !== -1) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error('Not allowed by CORS'));
-//     }
-//   },
-// };
-
 // const corsOptions = {
 //   origin: [
 //     'http://localhost:3000', 'http://localhost:3001',
