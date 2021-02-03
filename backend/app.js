@@ -25,7 +25,7 @@ const auth = require('./middlewares/auth');
 const corsOptions = {
   origin: [
     'http://localhost:3000', 'http://localhost:3001',
-    'https://zzzebbra.students.nomoreparties.space', 'http://www.zzzebbra.students.nomoreparties.space',
+    'https://zzzebbra.students.nomoreparties.space', 'https://www.zzzebbra.students.nomoreparties.space',
   ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   preflightContinue: false,
@@ -40,6 +40,13 @@ const app = express();
 
 app.use(cors(corsOptions));
 // app.use(cors());
+
+app.use((req, res, next) => {
+  res.headers('Access-Control-Allow-Origin', '*');
+  res.headers('Access-Control-Allow-Headers', '*');
+  res.headers('Access-Control-Allow-Vethods', 'GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS');
+  next();
+});
 
 mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
