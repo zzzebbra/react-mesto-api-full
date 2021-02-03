@@ -48,6 +48,7 @@ class Api {
         authorization: `Bearer ${jwt}`,
         'Content-Type': 'application/json',
       },
+      credentials: 'include',
     })
       .then(handleOriginalResponse);
   }
@@ -59,6 +60,7 @@ class Api {
         authorization: `Bearer ${jwt}`,
         'Content-Type': 'application/json',
       },
+      credentials: 'include',
     })
       .then(handleOriginalResponse);
   }
@@ -70,6 +72,7 @@ class Api {
         authorization: `Bearer ${jwt}`,
         'Content-Type': 'application/json',
       },
+      credentials: 'include',
     })
       .then(handleOriginalResponse);
   }
@@ -85,6 +88,7 @@ class Api {
         name,
         about,
       }),
+      credentials: 'include',
     })
       .then(handleOriginalResponse);
   }
@@ -100,6 +104,7 @@ class Api {
         name,
         link,
       }),
+      credentials: 'include',
     })
       .then(handleOriginalResponse);
   }
@@ -111,6 +116,7 @@ class Api {
         authorization: `Bearer ${jwt}`,
         'Content-Type': 'application/json',
       },
+      credentials: 'include',
     })
       .then(handleOriginalResponse);
   }
@@ -127,6 +133,7 @@ class Api {
       params: {
         cardId: this.cardId,
       },
+      credentials: 'include',
     })
       .then(handleOriginalResponse);
   }
@@ -141,6 +148,7 @@ class Api {
       body: JSON.stringify({
         avatar: link,
       }),
+      credentials: 'include',
     })
       .then(handleOriginalResponse);
   }
