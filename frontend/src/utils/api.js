@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-shadow */
 /* eslint-disable prefer-promise-reject-errors */
-import { baseUrl } from './constants';
+import baseUrl from './constants';
 
 const handleOriginalResponse = (res) => {
   if (!res.ok) {
