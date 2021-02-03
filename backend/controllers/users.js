@@ -60,6 +60,7 @@ module.exports.login = (req, res, next) => {
     .then((user) => {
     // создадим токен
       const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '7d' });
+      console.log(token, 'back, login');
       // вернём токен
       res.send({ token });
       return token;
@@ -69,6 +70,7 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.me = (req, res, next) => {
+  console.log(req, 'back, me');
   const userId = req.user._id;
   User.findOne({ _id: userId })
     .then((user) => res.send({ data: user }))
