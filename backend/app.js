@@ -46,6 +46,9 @@ app.use((req, res, next) => {
   res.headers('Access-Control-Allow-Origin', '*');
   res.headers('Access-Control-Allow-Headers', '*');
   res.headers('Access-Control-Allow-Vethods', 'GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS');
+  if (req.method === 'OPTIONS') {
+    res.send(200);
+  }
   next();
 });
 
