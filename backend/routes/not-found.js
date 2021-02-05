@@ -2,13 +2,10 @@
 const router = require('express').Router();
 const { NotFoundError } = require('../middlewares/errors');
 
-router.all('/', (req, res, next) => {
-  res.send().then(() => {
-    if (res.status(404)) {
-      throw new NotFoundError('Запрашиваемый ресурс не найден');
-    }
-  })
-    .catch(next);
+router.all('/*', (req, res) => {
+  if (res.status(404)) {
+    throw new NotFoundError('Запрашиваемый ресурс не найден');
+  }
 });
 
 module.exports = router;

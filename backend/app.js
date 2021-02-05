@@ -28,21 +28,22 @@ const { PORT = 3000 } = process.env;
 
 const app = express();
 
-//app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
+app.use(cors());
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:3000', 'http://localhost:3001',
-    'https://zzzebbra.students.nomoreparties.space', 'https://www.zzzebbra.students.nomoreparties.space', 'http://www.zzzebbra.students.nomoreparties.space',
-    'http://zzzebbra.students.nomoreparties.space');
-  res.header('Access-Control-Allow-Headers', 'http://localhost:3000', 'http://localhost:3001',
-    'https://zzzebbra.students.nomoreparties.space', 'https://www.zzzebbra.students.nomoreparties.space', 'http://www.zzzebbra.students.nomoreparties.space',
-    'http://zzzebbra.students.nomoreparties.space');
-  res.header('Access-Control-Allow-Vethods', 'GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS');
-  if (req.method === 'OPTIONS') {
-    res.send(200);
-  }
-  next();
-});
+// app.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', 'http://localhost:3000', 'http://localhost:3001',
+//     'https://zzzebbra.students.nomoreparties.space', 'https://www.zzzebbra.students.nomoreparties.space', 'http://www.zzzebbra.students.nomoreparties.space',
+//     'http://zzzebbra.students.nomoreparties.space');
+//   res.header('Access-Control-Allow-Headers', 'http://localhost:3000', 'http://localhost:3001',
+//     'https://zzzebbra.students.nomoreparties.space', 'https://www.zzzebbra.students.nomoreparties.space', 'http://www.zzzebbra.students.nomoreparties.space',
+//     'http://zzzebbra.students.nomoreparties.space');
+//   res.header('Access-Control-Allow-Vethods', 'GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS');
+//   if (req.method === 'OPTIONS') {
+//     res.send(200);
+//   }
+//   next();
+// });
 
 mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
@@ -53,6 +54,12 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 app.use(bodyParser.json());
 
 app.use(requestLogger);
+
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
 
 app.post('/signin', celebrate({
   body: Joi.object().keys({
