@@ -11,25 +11,24 @@ const routes = require('./routes/index');
 const { createUser, login } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 
-// const corsOptions = {
-//   origin: [
-//     'http://localhost:3000', 'http://localhost:3001',
-//     'https://zzzebbra.students.nomoreparties.space', 'https://www.zzzebbra.students.nomoreparties.space', 'http://www.zzzebbra.students.nomoreparties.space',
-//     'http://zzzebbra.students.nomoreparties.space',
-//   ],
-//   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
-//   preflightContinue: false,
-//   optionsSuccessStatus: 204,
-//   allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
-//   credentials: true,
-// };
+const corsOptions = {
+  origin: [
+    'http://localhost:3000', 'http://localhost:3001',
+    'https://zzzebbra.students.nomoreparties.space', 'https://www.zzzebbra.students.nomoreparties.space', 'http://www.zzzebbra.students.nomoreparties.space',
+    'http://zzzebbra.students.nomoreparties.space', '*',
+  ],
+  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+  allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
+  credentials: true,
+};
 
 const { PORT = 3000 } = process.env;
 
 const app = express();
 
-// app.use(cors(corsOptions));
-app.use(cors());
+app.use(cors(corsOptions));
 
 // app.use((req, res, next) => {
 //   res.header('Access-Control-Allow-Origin', 'http://localhost:3000', 'http://localhost:3001',
