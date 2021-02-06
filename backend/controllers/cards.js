@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 const Card = require('../models/card');
-const { BadRequestError, NotFoundError } = require('../middlewares/errors');
+const { BadRequestError, NotFoundError, ForbiddenError } = require('../middlewares/errors');
 
 module.exports.getCards = (req, res, next) => {
   Card.find({})
@@ -24,6 +24,8 @@ module.exports.deleteCard = (req, res, next) => {
       if (card.owner.toString() === req.user._id) {
         Card.findByIdAndRemove(req.params.cardId)
           .then(() => res.send({ data: card }));
+      } else {
+        throw new ForbiddenError('Невозможо удалить чужую карточку');
       }
     })
     .catch(next);
